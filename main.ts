@@ -221,8 +221,8 @@ function Start_Moving_Brown_Lama () {
         true
         )
         Is_Racer_Brown_Moving = true
-        for (let value of sprites.allOfKind(SpriteKind.Brown_Lama_Scenery)) {
-            value.setVelocity(Scenery_Speed, 0)
+        for (let Value_Sprite of sprites.allOfKind(SpriteKind.Brown_Lama_Scenery)) {
+            Value_Sprite.setVelocity(Scenery_Speed, 0)
         }
     }
 }
@@ -230,8 +230,11 @@ controller.right.onEvent(ControllerButtonEvent.Released, function () {
     if (RaceStarted && !(controller.right.isPressed())) {
         animation.stopAnimation(animation.AnimationTypes.All, Lama_White)
         Is_Racer_White_Moving = false
-        for (let value of sprites.allOfKind(SpriteKind.White_Lama_Scenery)) {
-            value.setVelocity(0, 0)
+        White_Lama_Stop_Kinds = [SpriteKind.White_Lama_Scenery, SpriteKind.Obstacle]
+        for (let index = 0; index <= White_Lama_Stop_Kinds.length - 0; index++) {
+            for (let Value_Sprite of sprites.allOfKind(White_Lama_Stop_Kinds[index])) {
+                Value_Sprite.setVelocity(0, 0)
+            }
         }
     }
     animation.runImageAnimation(
@@ -520,8 +523,10 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
         true
         )
         Is_Racer_White_Moving = true
-        for (let value of sprites.allOfKind(SpriteKind.White_Lama_Scenery)) {
-            value.setVelocity(Scenery_Speed, 0)
+        for (let index = 0; index <= White_Lama_Stop_Kinds.length - 0; index++) {
+            for (let Value_Sprite of sprites.allOfKind(White_Lama_Stop_Kinds[index])) {
+                Value_Sprite.setVelocity(Scenery_Speed, 0)
+            }
         }
     }
 })
@@ -534,14 +539,15 @@ sprites.onOverlap(SpriteKind.Lama_Brown_Marker, SpriteKind.End, function (sprite
 function Stop_Moving_Brown_Lama () {
     if (RaceStarted) {
         Is_Racer_Brown_Moving = false
-        for (let value of sprites.allOfKind(SpriteKind.Brown_Lama_Scenery)) {
-            value.setVelocity(0, 0)
+        for (let Value_Sprite of sprites.allOfKind(SpriteKind.Brown_Lama_Scenery)) {
+            Value_Sprite.setVelocity(0, 0)
         }
     }
 }
 let projectile: Sprite = null
 let ObstacleTurtle: Sprite = null
 let ObstacleTurtle2: Sprite = null
+let White_Lama_Stop_Kinds: number[] = []
 let Is_Racer_White_Moving = false
 let Is_Racer_Brown_Moving = false
 let RaceStarted = false
@@ -701,6 +707,8 @@ Lama_White.y = 33
 Lama_White_Marker.y += -5
 Lama_Brown_Marker.x = 5
 Lama_Brown_Marker.y += 5
+Lama_White.left = 20
+Lama_Brown.left = 20
 Lama_White_Marker.x = 5
 End_Marker.right = 160
 scene.setBackgroundColor(9)
